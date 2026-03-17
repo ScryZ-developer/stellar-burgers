@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import rootReducer from './rootReducer';
+import rootReducer from './RootReducer';
 
 import {
   TypedUseSelectorHook,
@@ -13,10 +13,7 @@ const store = configureStore({
   devTools: process.env.NODE_ENV !== 'production',
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: ['persist/PERSIST'],
-        ignoredPaths: ['constructor']
-      }
+      serializableCheck: false
     })
 });
 
