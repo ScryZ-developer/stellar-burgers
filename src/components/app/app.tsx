@@ -1,34 +1,74 @@
-import { ConstructorPage } from '@pages';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+import { Modal, OrderInfo, IngredientDetails } from '@components';
+import {
+  ConstructorPage,
+  Feed,
+  Login,
+  Register,
+  ForgotPassword,
+  ResetPassword,
+  Profile,
+  ProfileOrders,
+  NotFound404
+} from '@pages';
+
 import '../../index.css';
 import styles from './app.module.css';
 
 import { AppHeader } from '@components';
-import { Preloader } from '@ui';
 
-const App = () => {
-  /** TODO: взять переменные из стора */
-  const isIngredientsLoading = false;
-  const ingredients = [];
-  const error = null;
-
-  return (
+const App = () => (
+  <BrowserRouter>
     <div className={styles.app}>
       <AppHeader />
-      {isIngredientsLoading ? (
-        <Preloader />
-      ) : error ? (
-        <div className={`${styles.error} text text_type_main-medium pt-4`}>
-          {error}
-        </div>
-      ) : ingredients.length > 0 ? (
-        <ConstructorPage />
-      ) : (
-        <div className={`${styles.title} text text_type_main-medium pt-4`}>
-          Нет игредиентов
-        </div>
-      )}
+
+      <Routes>
+        <Route path='/' element={<ConstructorPage />} />
+
+        <Route path='/feed'>
+          <Route index element={<Feed />} />
+          <Route
+            path=':number'
+            element={
+              <Modal title={'2'} onClose={() => {}}>
+                <OrderInfo />
+              </Modal>
+            }
+          />
+        </Route>
+
+        <Route
+          path='/ingredients/:id'
+          element={
+            <Modal title={'2'} onClose={() => {}}>
+              <IngredientDetails />
+            </Modal>
+          }
+        />
+
+        <Route path='/profile'>
+          <Route index element={<Profile />} />
+          <Route path='orders' element={<ProfileOrders />} />
+          <Route
+            path='orders/:id'
+            element={
+              <Modal title={'2'} onClose={() => {}}>
+                <OrderInfo />
+              </Modal>
+            }
+          />
+        </Route>
+
+        <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
+        <Route path='/forgot-password' element={<ForgotPassword />} />
+        <Route path='/reset-password' element={<ResetPassword />} />
+
+        <Route path='*' element={<NotFound404 />} />
+      </Routes>
     </div>
-  );
-};
+  </BrowserRouter>
+);
 
 export default App;
