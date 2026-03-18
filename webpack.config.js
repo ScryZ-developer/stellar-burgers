@@ -9,12 +9,12 @@ module.exports = {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
+        exclude: [/node_modules/, /stories/, /\.stories\./, /\.test\./, /\.spec\./],
         use: ['babel-loader']
       },
       {
         test: /\.(ts)x?$/,
-        exclude: /node_modules/,
+        exclude: [/node_modules/, /stories/, /\.stories\./, /\.test\./, /\.spec\./],
         use: {
           loader: 'ts-loader'
         }
@@ -89,7 +89,6 @@ module.exports = {
     static: path.join(__dirname, './dist'),
     compress: true,
     historyApiFallback: true,
-    port: 4000,
-    open: true
+    port: 4000
   }
 };
