@@ -1,31 +1,35 @@
-import { useState, useRef, useEffect, FC } from 'react';
+import { useState, useRef, useEffect, FC, useMemo } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { useSelector } from 'react-redux';
-import { useDispatch, RootState } from '../../services/store';
+import { useDispatch, useSelector } from '../../services/store';
 
 import { TTabMode } from '@utils-types';
 import { BurgerIngredientsUI } from '../ui/burger-ingredients';
 import {
   selectIngredients,
+  selectIngredientsIsLoading,
   fetchIngredients
 } from '../../services/slices/ingredientsSlice';
 
 export const BurgerIngredients: FC = () => {
   const dispatch = useDispatch();
   const ingredients = useSelector(selectIngredients);
-  const isLoading = useSelector(
-    (state: RootState) => state.ingredients.isLoading
-  );
+  const isLoading = useSelector(selectIngredientsIsLoading);
 
-  const buns = ingredients
-    ? ingredients.filter((item) => item.type === 'bun')
-    : [];
-  const mains = ingredients
-    ? ingredients.filter((item) => item.type === 'main')
-    : [];
-  const sauces = ingredients
-    ? ingredients.filter((item) => item.type === 'sauce')
-    : [];
+  const buns = useMemo(
+    () =>
+      ingredients ? ingredients.filter((item) => item.type === 'bun') : [],
+    [ingredients]
+  );
+  const mains = useMemo(
+    () =>
+      ingredients ? ingredients.filter((item) => item.type === 'main') : [],
+    [ingredients]
+  );
+  const sauces = useMemo(
+    () =>
+      ingredients ? ingredients.filter((item) => item.type === 'sauce') : [],
+    [ingredients]
+  );
 
   const [currentTab, setCurrentTab] = useState<TTabMode>('bun');
   const titleBunRef = useRef<HTMLHeadingElement>(null);
@@ -68,7 +72,7 @@ export const BurgerIngredients: FC = () => {
     if (!ingredients.length && !isLoading) {
       dispatch(fetchIngredients());
     }
-  }, []);
+  }, [dispatch, ingredients.length, isLoading]);
 
   return (
     <BurgerIngredientsUI

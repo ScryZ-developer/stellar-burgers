@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
-import { useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
+import { useSelector } from '../../services/store';
 import {
   selectUser,
   selectUserInit,

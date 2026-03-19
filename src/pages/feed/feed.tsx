@@ -2,8 +2,7 @@ import { Preloader } from '@ui';
 import { FeedUI } from '@ui-pages';
 import { TOrder } from '@utils-types';
 import { FC, useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
-import { useDispatch } from '../../services/store';
+import { useDispatch, useSelector } from '../../services/store';
 import {
   selectFeedOrders,
   selectFeedLoading,
@@ -26,13 +25,13 @@ export const Feed: FC = () => {
       hasLoaded.current = true;
       dispatch(fetchFeeds());
     }
-  }, []);
+  }, [dispatch, isLoading]);
 
   useEffect(() => {
     if (!ingredients.length) {
       dispatch(fetchIngredients());
     }
-  }, []);
+  }, [dispatch, ingredients.length]);
 
   const handleGetFeeds = () => {
     dispatch(fetchFeeds());

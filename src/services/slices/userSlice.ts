@@ -64,6 +64,8 @@ export const fetchUser = createAsyncThunk(
       const res = await getUserApi();
       return res.user;
     } catch (e: unknown) {
+      deleteCookie('accessToken');
+      localStorage.removeItem('refreshToken');
       const errorMessage = e instanceof Error ? e.message : 'Unknown error';
       return rejectWithValue(errorMessage);
     }
@@ -151,8 +153,6 @@ const userSlice = createSlice({
         state.isInit = true;
         state.user = null;
         state.error = action.payload as string;
-        deleteCookie('accessToken');
-        localStorage.removeItem('refreshToken');
       })
 
       .addCase(updateUser.pending, (state) => {

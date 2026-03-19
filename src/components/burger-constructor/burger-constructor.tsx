@@ -1,6 +1,5 @@
 import { FC, useMemo } from 'react';
-import { useSelector } from 'react-redux';
-import { useDispatch } from '../../services/store';
+import { useDispatch, useSelector } from '../../services/store';
 import { useNavigate } from 'react-router-dom';
 import { TConstructorIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
@@ -11,9 +10,11 @@ import {
 import {
   selectOrderLoading,
   selectOrderData,
-  createOrder
+  createOrder,
+  clearCreated
 } from '../../services/slices/orderSlice';
 import { selectUser } from '../../services/slices/userSlice';
+import { reset } from '../../services/slices/constructorSlice';
 
 export const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
@@ -44,11 +45,16 @@ export const BurgerConstructor: FC = () => {
       constructorItems.bun._id
     ];
 
-    await dispatch(createOrder(ingredientIds));
+    try {
+      await dispatch(createOrder(ingredientIds)).unwrap();
+      dispatch(reset());
+    } catch {
+      // noop
+    }
   };
 
   const closeOrderModal = () => {
-    window.history.back();
+    dispatch(clearCreated());
   };
 
   const price = useMemo(

@@ -1,8 +1,7 @@
 import { FC, SyntheticEvent, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { RegisterUI } from '@ui-pages';
-import { useDispatch } from '../../services/store';
+import { useDispatch, useSelector } from '../../services/store';
 import {
   registerUser,
   selectUserLoading,

@@ -1,7 +1,6 @@
 import { FC, useMemo, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { useDispatch } from '../../services/store';
+import { useDispatch, useSelector } from '../../services/store';
 import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
@@ -10,7 +9,10 @@ import {
   selectOrderLoading,
   fetchOrderByNumber
 } from '../../services/slices/orderSlice';
-import { selectIngredients } from '../../services/slices/ingredientsSlice';
+import {
+  fetchIngredients,
+  selectIngredients
+} from '../../services/slices/ingredientsSlice';
 
 export const OrderInfo: FC = () => {
   const { number, id } = useParams<{ number?: string; id?: string }>();
@@ -29,11 +31,7 @@ export const OrderInfo: FC = () => {
 
   useEffect(() => {
     if (!ingredients.length) {
-      import('../../services/slices/ingredientsSlice').then(
-        ({ fetchIngredients }) => {
-          dispatch(fetchIngredients());
-        }
-      );
+      dispatch(fetchIngredients());
     }
   }, [ingredients.length, dispatch]);
 

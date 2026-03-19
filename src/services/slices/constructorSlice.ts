@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { v4 as uuidv4 } from 'uuid';
 import type { TIngredient, TConstructorIngredient } from '../../utils/types';
 import type { RootState } from '../store';
 
@@ -19,15 +20,16 @@ const constructorSlice = createSlice({
     setBun(state, action: PayloadAction<TIngredient>) {
       state.bun = action.payload;
     },
-    addItem(state, action: PayloadAction<TIngredient>) {
-      if (!state.items) {
-        state.items = [];
+    addItem: {
+      reducer(state, action: PayloadAction<TConstructorIngredient>) {
+        if (!state.items) {
+          state.items = [];
+        }
+        state.items.push(action.payload);
+      },
+      prepare(ingredient: TIngredient) {
+        return { payload: { ...ingredient, id: uuidv4() } };
       }
-      const constructorIngredient: TConstructorIngredient = {
-        ...action.payload,
-        id: `${action.payload._id}_${Date.now()}`
-      };
-      state.items.push(constructorIngredient);
     },
     removeItem(state, action: PayloadAction<number>) {
       if (!state.items) {
