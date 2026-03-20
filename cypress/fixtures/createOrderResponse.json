@@ -1,0 +1,14 @@
+{
+  "success": true,
+  "name": "Заказ",
+  "order": {
+    "_id": "order-1",
+    "status": "done",
+    "name": "Заказ",
+    "createdAt": "2026-03-20T12:00:00.000Z",
+    "updatedAt": "2026-03-20T12:00:00.000Z",
+    "number": 123456,
+    "ingredients": ["bun-1", "main-1", "bun-1"]
+  }
+}
+
