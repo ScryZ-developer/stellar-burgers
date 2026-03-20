@@ -85,7 +85,12 @@ export const getFeedsApi = () =>
     .then((data) => {
       if (data?.success) return data;
       return Promise.reject(data);
-    });
+    })
+    .then((data) => ({
+      orders: data.orders,
+      total: data.total,
+      totalToday: data.totalToday
+    }));
 
 export const getOrdersApi = () =>
   fetchWithRefresh<TFeedsResponse>(`${URL}/orders`, {
@@ -99,26 +104,8 @@ export const getOrdersApi = () =>
     return Promise.reject(data);
   });
 
-type TOwner = {
-  name: string;
-  email: string;
-  createdAt: string;
-  updatedAt: string;
-};
-
-type TNewOrder = {
-  _id: string;
-  status: string;
-  name: string;
-  owner: TOwner;
-  createdAt: string;
-  updatedAt: string;
-  number: number;
-  price: number;
-};
-
 type TNewOrderResponse = TServerResponse<{
-  order: TNewOrder;
+  order: TOrder;
   name: string;
 }>;
 

@@ -28,7 +28,7 @@ export const DefaultIngredient: Story = {
     ingredient: {
       _id: '111',
       name: 'Булка',
-      type: 'top',
+      type: 'bun',
       proteins: 12,
       fat: 33,
       carbohydrates: 22,
@@ -39,15 +39,46 @@ export const DefaultIngredient: Story = {
       image_mobile: ''
     },
     count: 2,
-    locationState: {
-      background: {
-        hash: '',
-        key: 'eitkep27',
-        pathname: '/',
-        search: '',
-        state: null
-      }
+    handleAdd: () => {}
+  }
+};
+
+export const SauceIngredient: Story = {
+  args: {
+    ingredient: {
+      _id: '222',
+      name: 'Соус фирменный',
+      type: 'sauce',
+      proteins: 8,
+      fat: 15,
+      carbohydrates: 18,
+      calories: 25,
+      price: 50,
+      image: '',
+      image_large: '',
+      image_mobile: ''
     },
+    count: 1,
+    handleAdd: () => {}
+  }
+};
+
+export const MainIngredient: Story = {
+  args: {
+    ingredient: {
+      _id: '333',
+      name: 'Бифштекс из говядины',
+      type: 'main',
+      proteins: 25,
+      fat: 18,
+      carbohydrates: 5,
+      calories: 280,
+      price: 200,
+      image: '',
+      image_large: '',
+      image_mobile: ''
+    },
+    count: 0,
     handleAdd: () => {}
   }
 };
