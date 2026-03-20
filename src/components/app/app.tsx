@@ -41,7 +41,17 @@ const App = () => {
           <Route path=':number' element={<OrderInfo />} />
         </Route>
 
-        <Route path='/ingredients/:id' element={<IngredientDetails />} />
+        <Route
+          path='/ingredients/:id'
+          element={
+            <div className={styles.detailPageWrap}>
+              <p className={'text text_type_main-large ${styles.detailHeader}'}>
+                Детали ингредиента
+              </p>
+              <IngredientDetails />
+            </div>
+          }
+        />
 
         <Route path='/profile'>
           <Route
